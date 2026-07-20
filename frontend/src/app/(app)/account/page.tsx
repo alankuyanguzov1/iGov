@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ArrowRight, FolderOpen } from "lucide-react";
+import { ArrowRight, FolderOpen, ShieldAlert } from "lucide-react";
+import { DeleteAccountButton } from "@/components/app/delete-account-button";
 import {
   Badge,
   ButtonLink,
@@ -112,6 +113,19 @@ export default async function AccountPage() {
             ))}
           </div>
         )}
+      </section>
+
+      <section className="flex flex-col gap-4 border-t border-border pt-8">
+        <div className="flex items-center gap-2">
+          <ShieldAlert className="size-4 text-faint" aria-hidden />
+          <h2 className="font-heading text-base font-semibold text-fg">
+            {t.account.dangerTitle}
+          </h2>
+        </div>
+        <p className="max-w-xl text-sm leading-relaxed text-muted">{t.account.dangerText}</p>
+        <div>
+          <DeleteAccountButton />
+        </div>
       </section>
     </main>
   );

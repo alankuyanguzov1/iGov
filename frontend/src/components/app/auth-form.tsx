@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Link from "next/link";
+import { MailCheck } from "lucide-react";
 import { Button, Input } from "@/components/ui";
 import { createClient } from "@/lib/supabase/client";
 import { translateAuthError } from "@/lib/auth-errors";
@@ -18,6 +20,7 @@ export function AuthForm({ mode }: AuthFormProps) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [awaitingConfirm, setAwaitingConfirm] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -42,8 +45,27 @@ export function AuthForm({ mode }: AuthFormProps) {
       return;
     }
 
+    if (mode === "signup" && !result.data.session) {
+      // Включено подтверждение почты: сессии нет, ждем клика по ссылке из письма
+      setAwaitingConfirm(true);
+      setLoading(false);
+      return;
+    }
+
     router.push("/account");
     router.refresh();
+  }
+
+  if (awaitingConfirm) {
+    return (
+      <div className="flex flex-col items-start gap-4 border border-border p-6">
+        <MailCheck className="size-6 text-accent" aria-hidden />
+        <h2 className="font-heading text-lg font-semibold text-fg">
+          {t.auth.checkEmailTitle}
+        </h2>
+        <p className="text-sm leading-relaxed text-muted">{t.auth.checkEmailText}</p>
+      </div>
+    );
   }
 
   return (
@@ -70,6 +92,18 @@ export function AuthForm({ mode }: AuthFormProps) {
       <Button type="submit" loading={loading} className="w-full">
         {mode === "login" ? t.auth.loginCta : t.auth.signupCta}
       </Button>
+      {mode === "signup" && (
+        <p className="text-sm leading-relaxed text-faint">
+          {t.auth.consentPrefix}{" "}
+          <Link href="/terms" className="text-muted underline hover:text-fg">
+            {t.auth.consentTerms}
+          </Link>{" "}
+          {t.auth.consentAnd}{" "}
+          <Link href="/privacy" className="text-muted underline hover:text-fg">
+            {t.auth.consentPrivacy}
+          </Link>
+        </p>
+      )}
     </form>
   );
 }
