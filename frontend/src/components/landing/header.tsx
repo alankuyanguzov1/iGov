@@ -21,6 +21,9 @@ export function LandingHeader() {
           <a href="#faq" className="text-sm text-muted transition-colors hover:text-fg">
             {t.landing.nav.faq}
           </a>
+          <Link href="/benefits" className="text-sm text-muted transition-colors hover:text-fg">
+            {t.benefits.title}
+          </Link>
         </nav>
         <ButtonLink href="/check" size="sm">
           {t.landing.nav.cta}
