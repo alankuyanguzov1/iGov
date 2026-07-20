@@ -60,8 +60,8 @@ export const familyBenefits: Benefit[] = [
     legalRef: "Социальный кодекс РК, глава о пособиях семьям с детьми",
     legalUrl: "https://adilet.zan.kz/rus/docs/K2300000224",
     applyUrl: "https://egov.kz",
-    verifiedAt: "2026-07-17",
-    verification: "needs_check",
+    verifiedAt: "2026-07-21",
+    verification: "verified",
   },
   {
     slug: "childcare-benefit",
@@ -83,12 +83,13 @@ export const familyBenefits: Benefit[] = [
     documents: ["Удостоверение личности", "Реквизиты банковского счета"],
     amountFormula:
       "Неработавшим: от 5.76 МРП на первого ребенка до 8.9 МРП на четвертого и следующих. Работавшим: 40% от среднемесячного дохода за 2 года, но не меньше базового размера",
-    amountExample: "В 2026 году базовый размер: примерно от 24 900 до 38 500 тенге в месяц",
+    amountExample:
+      "В 2026 году для неработавших: 24 912 тенге на первого ребенка, 29 453 на второго, 33 951 на третьего, 38 493 на четвертого и следующих",
     legalRef: "Социальный кодекс РК",
     legalUrl: "https://adilet.zan.kz/rus/docs/K2300000224",
     applyUrl: "https://egov.kz",
-    verifiedAt: "2026-07-17",
-    verification: "needs_check",
+    verifiedAt: "2026-07-21",
+    verification: "verified",
   },
   {
     slug: "multichild-benefit",
@@ -108,13 +109,15 @@ export const familyBenefits: Benefit[] = [
       "Вручную: заявление на eGov.kz или в ЦОН",
     ],
     documents: ["Удостоверение личности", "Свидетельства о рождении детей учитываются автоматически"],
-    amountFormula: "От 16.03 МРП при четырех детях, размер растет с каждым следующим ребенком",
-    amountExample: "В 2026 году: от 69 330 тенге в месяц при четырех детях",
+    amountFormula:
+      "4 детей: 16.03 МРП; 5 детей: 20.04 МРП; 6 детей: 24.05 МРП; 7 детей: 28.06 МРП; 8 и более: 4 МРП на каждого ребенка",
+    amountExample:
+      "В 2026 году: 69 330 тенге при четырех детях, 86 673 при пяти, 104 017 при шести, 121 360 при семи",
     legalRef: "Социальный кодекс РК",
     legalUrl: "https://adilet.zan.kz/rus/docs/K2300000224",
     applyUrl: "https://egov.kz",
-    verifiedAt: "2026-07-17",
-    verification: "needs_check",
+    verifiedAt: "2026-07-21",
+    verification: "verified",
   },
   {
     slug: "altyn-alka",
@@ -124,7 +127,7 @@ export const familyBenefits: Benefit[] = [
     proactive: true,
     shortDesc: "Ежемесячная выплата матерям с подвесками Алтын алқа и Күміс алқа",
     whatYouGet:
-      "Пожизненное ежемесячное пособие матерям, награжденным подвесками Алтын алқа (7 и более детей) или Күміс алқа (6 детей).",
+      "Пожизненное ежемесячное пособие матерям, награжденным подвесками Алтын алқа (7 и более детей) или Күміс алқа (6 детей). Размер для Алтын алқа выше.",
     whoEligible: [
       "Матери, награжденные подвеской Алтын алқа или Күміс алқа",
       "Награждение оформляется через акимат при достижении детьми установленного возраста",
@@ -134,13 +137,13 @@ export const familyBenefits: Benefit[] = [
       "При отсутствии выплаты: заявление через eGov.kz или ЦОН",
     ],
     documents: ["Удостоверение личности", "Удостоверение к награде"],
-    amountFormula: "6.4 МРП ежемесячно",
-    amountExample: "В 2026 году: 27 680 тенге в месяц",
+    amountFormula: "Күміс алқа: 6.4 МРП ежемесячно. Алтын алқа: 7.4 МРП ежемесячно",
+    amountExample: "В 2026 году: 27 680 тенге для Күміс алқа, 32 005 тенге для Алтын алқа",
     legalRef: "Социальный кодекс РК",
     legalUrl: "https://adilet.zan.kz/rus/docs/K2300000224",
     applyUrl: "https://egov.kz",
-    verifiedAt: "2026-07-17",
-    verification: "needs_check",
+    verifiedAt: "2026-07-21",
+    verification: "verified",
   },
   {
     slug: "natsfond-detyam",

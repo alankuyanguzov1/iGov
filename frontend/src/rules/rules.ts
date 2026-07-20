@@ -110,7 +110,7 @@ export const rules: Rule[] = [
     const slug = "multichild-benefit";
     const kids = childrenUnder(a, 18);
     if (kids >= 4) {
-      const estimate = mrp(16.03 + 4.01 * (kids - 4));
+      const estimate = kids >= 8 ? mrp(4 * kids) : mrp(16.03 + 4.01 * (kids - 4));
       return {
         slug,
         verdict: "yes",
@@ -139,7 +139,10 @@ export const rules: Rule[] = [
       slug,
       verdict: "yes",
       amountMonthly: mrp(6.4),
-      reasons: ["У вас есть награда Алтын алқа или Күміс алқа: пособие пожизненное"],
+      reasons: [
+        "У вас есть награда Алтын алқа или Күміс алқа: пособие пожизненное",
+        `Показан размер для Күміс алқа; для Алтын алқа выплата выше: ${formatKzt(mrp(7.4))} в месяц`,
+      ],
     };
   },
 
@@ -160,7 +163,7 @@ export const rules: Rule[] = [
   (a: Answers): RuleResult => {
     const slug = "disability-benefit";
     if (!a.statuses.includes("disability") || a.disabilityGroup === null) return no(slug);
-    const coef = a.disabilityGroup === 1 ? 1.92 : a.disabilityGroup === 2 ? 1.53 : 1.04;
+    const coef = a.disabilityGroup === 1 ? 2.2 : a.disabilityGroup === 2 ? 1.76 : 1.2;
     return {
       slug,
       verdict: "yes",
@@ -196,7 +199,7 @@ export const rules: Rule[] = [
       return {
         slug,
         verdict: "yes",
-        amountNote: `Базовая пенсия от ${formatKzt(pm(0.7))} до ${formatKzt(pm(1.1))} по стажу, плюс солидарная и накопительная части`,
+        amountNote: `Базовая пенсия от ${formatKzt(pm(0.7))} до ${formatKzt(pm(1.18))} по стажу, плюс солидарная и накопительная части`,
         reasons: ["Вы достигли пенсионного возраста"],
       };
     }
@@ -275,7 +278,7 @@ export const rules: Rule[] = [
     return {
       slug,
       verdict: "check",
-      amountNote: "Около 46 000 тенге в месяц при обучении на гранте без троек",
+      amountNote: "52 372 тенге в месяц при обучении на гранте без троек, отличникам 60 228",
       reasons: ["Вы студент очной формы: стипендия зависит от гранта и успеваемости"],
     };
   },
