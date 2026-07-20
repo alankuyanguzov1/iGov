@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Bell, CircleCheck, CircleHelp, ClipboardList, Pencil } from "lucide-react";
 import {
   Badge,
+  Button,
   ButtonLink,
   Card,
   CardContent,
@@ -17,15 +18,27 @@ import { getBenefitBySlug } from "@/content/benefits";
 import { formatKzt } from "@/content/parameters";
 import { evaluateAll } from "@/rules/engine";
 import type { RuleResult } from "@/rules/types";
+import { getCurrentUserId, listSavedSlugs, saveProfile } from "@/lib/user-benefits";
+import { SaveBenefitButton } from "@/components/app/save-benefit-button";
 
 export default function ResultsPage() {
   const t = getDictionary();
   const [answers, setAnswers] = useState<Answers | null>(null);
   const [hydrated, setHydrated] = useState(false);
+  const [authed, setAuthed] = useState(false);
+  const [savedSlugs, setSavedSlugs] = useState<string[]>([]);
+  const [profileState, setProfileState] = useState<"idle" | "saving" | "saved">("idle");
 
   useEffect(() => {
     setAnswers(loadAnswers());
     setHydrated(true);
+    void (async () => {
+      const userId = await getCurrentUserId();
+      setAuthed(userId !== null);
+      if (userId) {
+        setSavedSlugs(await listSavedSlugs());
+      }
+    })();
   }, []);
 
   if (!hydrated) {
@@ -50,6 +63,13 @@ export default function ResultsPage() {
   const output = evaluateAll(answers);
   const hasAny =
     output.eligible.length > 0 || output.almost.length > 0 || output.check.length > 0;
+
+  async function handleSaveProfile() {
+    if (!answers) return;
+    setProfileState("saving");
+    const ok = await saveProfile(answers);
+    setProfileState(ok ? "saved" : "idle");
+  }
 
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-10 px-6 py-16">
@@ -91,6 +111,30 @@ export default function ResultsPage() {
         </section>
       )}
 
+      {hasAny && (
+        <section className="flex flex-col items-start gap-3 border border-border p-6">
+          {authed ? (
+            profileState === "saved" ? (
+              <p className="flex items-center gap-2 text-sm font-medium text-fg">
+                <CircleCheck className="size-4 text-accent" aria-hidden />
+                {t.results.profileSaved}
+              </p>
+            ) : (
+              <Button onClick={handleSaveProfile} loading={profileState === "saving"}>
+                {t.results.saveProfileCta}
+              </Button>
+            )
+          ) : (
+            <>
+              <p className="text-sm leading-relaxed text-muted">{t.results.authPrompt}</p>
+              <ButtonLink href="/signup" size="sm">
+                {t.results.authCta}
+              </ButtonLink>
+            </>
+          )}
+        </section>
+      )}
+
       {!hasAny && (
         <section className="flex flex-col items-start gap-4">
           <h2 className="font-heading text-xl font-semibold text-fg">{t.results.noneTitle}</h2>
@@ -106,6 +150,8 @@ export default function ResultsPage() {
           title={t.results.eligibleTitle}
           subtitle={t.results.eligibleSubtitle}
           items={output.eligible}
+          authed={authed}
+          savedSlugs={savedSlugs}
           t={t}
         />
       )}
@@ -114,6 +160,8 @@ export default function ResultsPage() {
           title={t.results.almostTitle}
           subtitle={t.results.almostSubtitle}
           items={output.almost}
+          authed={authed}
+          savedSlugs={savedSlugs}
           t={t}
         />
       )}
@@ -122,6 +170,8 @@ export default function ResultsPage() {
           title={t.results.checkTitle}
           subtitle={t.results.checkSubtitle}
           items={output.check}
+          authed={authed}
+          savedSlugs={savedSlugs}
           t={t}
         />
       )}
@@ -133,17 +183,16 @@ export default function ResultsPage() {
   );
 }
 
-function ResultSection({
-  title,
-  subtitle,
-  items,
-  t,
-}: {
+type SectionProps = {
   title: string;
   subtitle: string;
   items: RuleResult[];
+  authed: boolean;
+  savedSlugs: string[];
   t: ReturnType<typeof getDictionary>;
-}) {
+};
+
+function ResultSection({ title, subtitle, items, authed, savedSlugs, t }: SectionProps) {
   return (
     <section className="flex flex-col gap-5">
       <div className="flex flex-col gap-1">
@@ -154,7 +203,13 @@ function ResultSection({
       </div>
       <div className="flex flex-col gap-4">
         {items.map((result) => (
-          <ResultCard key={result.slug} result={result} t={t} />
+          <ResultCard
+            key={result.slug}
+            result={result}
+            authed={authed}
+            initialSaved={savedSlugs.includes(result.slug)}
+            t={t}
+          />
         ))}
       </div>
     </section>
@@ -163,9 +218,13 @@ function ResultSection({
 
 function ResultCard({
   result,
+  authed,
+  initialSaved,
   t,
 }: {
   result: RuleResult;
+  authed: boolean;
+  initialSaved: boolean;
   t: ReturnType<typeof getDictionary>;
 }) {
   const benefit = getBenefitBySlug(result.slug);
@@ -183,12 +242,19 @@ function ResultCard({
       <CardHeader>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <CardTitle className="text-base leading-snug">{benefit.title}</CardTitle>
-          {benefit.proactive && (
-            <Badge variant="outline">
-              <Bell className="size-3" aria-hidden />
-              {t.results.proactiveBadge}
-            </Badge>
-          )}
+          <div className="flex items-center gap-2">
+            {benefit.proactive && (
+              <Badge variant="outline">
+                <Bell className="size-3" aria-hidden />
+                {t.results.proactiveBadge}
+              </Badge>
+            )}
+            <SaveBenefitButton
+              slug={benefit.slug}
+              authed={authed}
+              initialSaved={initialSaved}
+            />
+          </div>
         </div>
         {amount && <p className="text-lg font-semibold text-accent">{amount}</p>}
       </CardHeader>

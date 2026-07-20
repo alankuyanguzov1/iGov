@@ -13,6 +13,7 @@ import {
   Users,
 } from "lucide-react";
 import { Badge, Card, CardContent, CardHeader, CardTitle, buttonClasses } from "@/components/ui";
+import { BenefitTracker } from "@/components/app/benefit-tracker";
 import { allBenefits, categoryTitles, getBenefitBySlug } from "@/content/benefits";
 import { getDictionary } from "@/lib/i18n";
 
@@ -138,14 +139,7 @@ export default async function BenefitPage({ params }: PageProps) {
           <CardTitle>{t.benefits.documents}</CardTitle>
         </CardHeader>
         <CardContent>
-          <ul className="flex flex-col gap-3">
-            {benefit.documents.map((doc) => (
-              <li key={doc} className="flex items-start gap-3 text-sm leading-relaxed text-fg">
-                <FileText className="mt-0.5 size-4 shrink-0 text-faint" aria-hidden />
-                {doc}
-              </li>
-            ))}
-          </ul>
+          <BenefitTracker slug={benefit.slug} documents={benefit.documents} />
         </CardContent>
       </Card>
 
