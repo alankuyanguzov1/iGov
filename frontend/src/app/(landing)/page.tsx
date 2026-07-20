@@ -1,16 +1,31 @@
-import { getDictionary } from "@/lib/i18n";
+import type { Metadata } from "next";
+import { Hero } from "@/components/landing/hero";
+import { Stats } from "@/components/landing/stats";
+import { HowItWorks } from "@/components/landing/how-it-works";
+import { Segments } from "@/components/landing/segments";
+import { Faq } from "@/components/landing/faq";
+
+export const metadata: Metadata = {
+  title: "GovAid Navigator: проверьте свои льготы за две минуты",
+  description:
+    "Ответьте на восемь вопросов и узнайте, какие выплаты, вычеты и льготы вам положены в Казахстане. Расчет по действующим законам, бесплатно и без регистрации.",
+  openGraph: {
+    title: "GovAid Navigator",
+    description:
+      "Персональный навигатор по мерам государственной поддержки Казахстана. Узнайте, что вам положено.",
+    type: "website",
+    locale: "ru_RU",
+  },
+};
 
 export default function LandingPage() {
-  const t = getDictionary();
-
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-6 px-6">
-      <h1 className="font-heading text-4xl font-bold tracking-tight text-fg md:text-5xl">
-        {t.landing.title}
-      </h1>
-      <p className="max-w-xl text-center text-base leading-relaxed text-muted">
-        {t.landing.subtitle}
-      </p>
+    <main>
+      <Hero />
+      <Stats />
+      <HowItWorks />
+      <Segments />
+      <Faq />
     </main>
   );
 }

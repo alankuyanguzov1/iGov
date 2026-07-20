@@ -30,6 +30,10 @@
   --font-body: var(--font-golos);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--bg);
   color: var(--fg);

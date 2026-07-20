@@ -1,5 +1,6 @@
-export { Button, ButtonLink, buttonClasses } from "./button";
-export type { ButtonVariant, ButtonSize } from "./button";
+export { Button, ButtonLink } from "./button";
+export { buttonClasses } from "./button-styles";
+export type { ButtonVariant, ButtonSize } from "./button-styles";
 export { Input } from "./input";
 export { Select } from "./select";
 export { Checkbox } from "./checkbox";
