@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+/*
+  Дизайн-токены GovAid Navigator. Единственный источник правды.
+  Правила: светлая тема, монохром + один акцент #00757C, radius максимум 2px.
+  Ни один компонент не вводит собственные цвета или скругления.
+*/
+
+:root {
+  --bg: #ffffff;
+  --fg: #0a0a0a;
+  --muted: #666666;
+  --faint: #a3a3a3;
+  --border: #e5e5e5;
+  --accent: #00757c;
+  --accent-hover: #005a60;
+  --radius: 2px;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --radius-sm: var(--radius);
+  --font-heading: var(--font-unbounded);
+  --font-body: var(--font-golos);
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-golos), Arial, sans-serif;
+}
