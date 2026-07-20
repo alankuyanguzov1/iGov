@@ -106,6 +106,30 @@
       "rights": "GovAid Navigator, 2026"
     }
   },
+  "auth": {
+    "loginTitle": "Вход",
+    "loginSubtitle": "Войдите, чтобы увидеть сохраненные льготы и продолжить оформление",
+    "signupTitle": "Регистрация",
+    "signupSubtitle": "Аккаунт нужен, чтобы сохранять результаты и отслеживать оформление льгот",
+    "email": "Электронная почта",
+    "emailPlaceholder": "name@mail.kz",
+    "password": "Пароль",
+    "passwordHint": "Минимум 6 символов",
+    "loginCta": "Войти",
+    "signupCta": "Создать аккаунт",
+    "noAccount": "Нет аккаунта?",
+    "haveAccount": "Уже есть аккаунт?",
+    "toSignup": "Зарегистрироваться",
+    "toLogin": "Войти",
+    "signOut": "Выйти"
+  },
+  "account": {
+    "title": "Личный кабинет",
+    "emailLabel": "Почта",
+    "sinceLabel": "Аккаунт создан",
+    "placeholderTitle": "Пока здесь пусто",
+    "placeholderText": "После заполнения анкеты здесь появятся сохраненные льготы и прогресс оформления"
+  },
   "check": {
     "title": "Анкета"
   }
