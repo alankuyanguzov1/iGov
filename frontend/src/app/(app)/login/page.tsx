@@ -25,12 +25,19 @@ export default async function LoginPage() {
         <p className="text-sm leading-relaxed text-muted">{t.auth.loginSubtitle}</p>
       </div>
       <AuthForm mode="login" />
-      <p className="text-sm text-muted">
-        {t.auth.noAccount}{" "}
-        <Link href="/signup" className="font-medium text-accent hover:text-accent-hover">
-          {t.auth.toSignup}
-        </Link>
-      </p>
+      <div className="flex flex-col gap-2">
+        <p className="text-sm text-muted">
+          {t.auth.noAccount}{" "}
+          <Link href="/signup" className="font-medium text-accent hover:text-accent-hover">
+            {t.auth.toSignup}
+          </Link>
+        </p>
+        <p className="text-sm text-muted">
+          <Link href="/reset" className="text-muted underline transition-colors hover:text-fg">
+            {t.auth.forgot}
+          </Link>
+        </p>
+      </div>
     </main>
   );
 }
