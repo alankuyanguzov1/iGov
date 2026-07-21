@@ -20,6 +20,8 @@ import { evaluateAll } from "@/rules/engine";
 import type { RuleResult } from "@/rules/types";
 import { getCurrentUserId, listSavedSlugs, saveProfile } from "@/lib/user-benefits";
 import { SaveBenefitButton } from "@/components/app/save-benefit-button";
+import { Simulator } from "@/components/app/simulator";
+import { saveAnswers } from "@/lib/questionnaire";
 
 export default function ResultsPage() {
   const t = getDictionary();
@@ -110,6 +112,16 @@ export default function ResultsPage() {
           {output.approximate && <Badge>{t.results.approxBadge}</Badge>}
         </section>
       )}
+
+      <Simulator
+        base={answers}
+        onApply={(next) => {
+          saveAnswers(next);
+          setAnswers(next);
+          setProfileState("idle");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }}
+      />
 
       {hasAny && (
         <section className="flex flex-col items-start gap-3 border border-border p-6">

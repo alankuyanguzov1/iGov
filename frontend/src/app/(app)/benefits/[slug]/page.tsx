@@ -9,10 +9,12 @@ import {
   ExternalLink,
   FileText,
   ListChecks,
+  MessageCircleQuestion,
   Scale,
   Users,
 } from "lucide-react";
 import { Badge, Card, CardContent, CardHeader, CardTitle, buttonClasses } from "@/components/ui";
+import { AskBenefit } from "@/components/app/ask-benefit";
 import { BenefitTracker } from "@/components/app/benefit-tracker";
 import { allBenefits, categoryTitles, getBenefitBySlug } from "@/content/benefits";
 import { getDictionary } from "@/lib/i18n";
@@ -140,6 +142,19 @@ export default async function BenefitPage({ params }: PageProps) {
         </CardHeader>
         <CardContent>
           <BenefitTracker slug={benefit.slug} documents={benefit.documents} />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader className="flex-col gap-1.5">
+          <div className="flex items-center gap-3">
+            <MessageCircleQuestion className="size-5 text-accent" aria-hidden />
+            <CardTitle>{t.ask.title}</CardTitle>
+          </div>
+          <p className="text-sm text-muted">{t.ask.subtitle}</p>
+        </CardHeader>
+        <CardContent>
+          <AskBenefit slug={benefit.slug} />
         </CardContent>
       </Card>
 
